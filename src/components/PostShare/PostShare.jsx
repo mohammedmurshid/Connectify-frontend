@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import ProfileImage from "../../img/profileImg.jpg";
 import "./PostShare.css";
 import { UilScenery } from "@iconscout/react-unicons";
 import { UilPlayCircle } from "@iconscout/react-unicons";
 import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilSchedule } from "@iconscout/react-unicons";
+import { UilTimes } from "@iconscout/react-unicons";
+
 const PostShare = () => {
+  const [image, setImage] = useState(null);
+
+  const imageRef = useRef();
+
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage({
+        image: URL.createObjectURL(img),
+      });
+    }
+  };
   return (
     <div className="PostShare">
       <img src={ProfileImage} alt="" />
       <div>
         <input type="text" placeholder="What's happening?" />
         <div className="postOptions">
-          <div className="option" style={{ color: "var(--photo)" }}>
+          <div
+            className="option"
+            style={{ color: "var(--photo)" }}
+            onClick={() => imageRef.current.click()}
+          >
             <UilScenery />
             Photo
           </div>
@@ -29,7 +47,25 @@ const PostShare = () => {
             Schedule
           </div>
           <button className="button ps-button">Share</button>
+          <div style={{ display: "none" }}>
+            <input
+              type="file"
+              name="myImage"
+              ref={imageRef}
+              onChange={onImageChange}
+            />
+          </div>
         </div>
+        {/* {if the image is available, displays the image} */}
+        {image && (
+          <div className="previewImage">
+            {/* div to show the selected image */}
+            <UilTimes onClick={() => setImage(null)} />{" "}
+            {/* icon to delete the selected image */}
+            <img src={image.image} alt="" />{" "}
+            {/* image tag to show the selected image */}
+          </div>
+        )}
       </div>
     </div>
   );
