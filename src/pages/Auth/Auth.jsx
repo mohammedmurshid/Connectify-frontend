@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./Auth.css";
 import Logo from "../../img/logo.png";
+import { useDispatch } from "react-redux";
+import { logIn, signUp } from "../../actions/AuthAction";
 
 const Auth = () => {
   const [isSignedUp, setIsSignedUp] = useState(true);
+
+  const dispatch = useDispatch();
 
   // handling the inputs
   const [data, setData] = useState({
@@ -27,9 +31,11 @@ const Auth = () => {
     e.preventDefault();
 
     if (isSignedUp) {
-      if (data.password !== data.confirmpassword) {
-        setConfirmPass(false);
-      }
+      data.password === data.confirmpassword
+        ? dispatch(signUp(data))
+        : setConfirmPass(false);
+    } else {
+      dispatch(logIn(data));
     }
   };
 
