@@ -24,7 +24,7 @@ function App() {
 
         <Route
           path="/auth"
-          element={user ? <Navigate to="../home" /> : <Auth />}
+          element={user ? <Navigate to="../home" /> : <Home />}
         />
 
         <Route
