@@ -4,9 +4,9 @@ const API = axios.create({ baseURL: "http://localhost:4000" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
-    req.headers.Authorization = `Bearer ${JSON.stringify(
-      localStorage.getItem("profile").token
-    )}`;
+    req.headers.Authorization = `Bearer ${
+      JSON.stringify(localStorage.getItem("profile")).token
+    }`;
   }
   return req;
 });
